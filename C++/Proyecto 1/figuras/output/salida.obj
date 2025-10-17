@@ -1,0 +1,12 @@
+# Poligono con vertces y aristas
+v -1 -1 0
+v 1 -1 0
+v 1 1 0
+v -1 1 0
+
+l 1 2
+l 1 3
+l 1 4
+l 2 3
+l 2 4
+l 3 4

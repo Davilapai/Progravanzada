@@ -1,0 +1,16 @@
+lavadora
+100
+50
+#
+tv
+25
+75
+#
+celular
+20
+30
+#
+audifonos
+30
+5
+#
