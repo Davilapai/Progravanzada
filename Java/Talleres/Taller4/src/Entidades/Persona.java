@@ -10,6 +10,7 @@ public class Persona {
     private String residencia;
     private String cedula;
     private ArrayList<Perro> perritos;//Recordar lo del uml, una persona varios perros un perro 1 persona :D
+    
 
     //Getters
     public String getNombre() {return nombre;}
@@ -33,6 +34,11 @@ public class Persona {
     }
 
     //Metodos
+    public boolean tienePerros(){
+        if(perritos.size()==0)return false;
+        return true;
+    }
+
     public void adoptarMascota(Perro perrete){
         perritos.add(perrete);
         perrete.setDuenio(this); //Esto hace referencia al objeto actual, entonces esta persona va a ser el duenio del perrete
@@ -53,6 +59,10 @@ public class Persona {
     }
 
     public void cambiarNombreMascota(String nAntiguo, String nNuevo){
+        if(!tienePerros()){
+            System.out.println("La persona no tiene perritos");
+            return;
+        }
         Perro perrito = buscarMascota(nAntiguo);
         if(perrito != null){
             perrito.setNombre(nNuevo);
@@ -60,11 +70,11 @@ public class Persona {
     }
 
     public void mostrarMascotas(){
-        if(perritos.size()==0){
+        if(!tienePerros()){
             System.out.println("La persona no tiene perritos");
             return;
         }
-        System.out.println("La persona tiene " + perritos.size() + "perritos");
+        System.out.println("La persona tiene " + perritos.size() + " perrito(s)");
         for(Perro perrito : perritos){
             System.out.println("-----------");
             System.out.println("Nombre del perrito: " + perrito.getNombre());
@@ -78,6 +88,7 @@ public class Persona {
             int mes = fechaAdopcion.get(Calendar.MONTH) + 1; // +1 pq enero es 0
             int anio = fechaAdopcion.get(Calendar.YEAR);
             System.out.println("Fecha de adopción: " + dia + "/" + mes + "/" + anio);
+            System.out.println("-----------");
         }
     }
 
