@@ -53,18 +53,6 @@ public class CentroAdopcion {
                 System.out.println("-----------");
             }
         }
-        for(Perro perrito : perros){
-            System.out.println("Las mascotas disponibles no disponibles son las siguientes");
-            double edad = perrito.calcularEdad();
-            if(edad<1){
-                System.out.println("-----------");
-                System.out.println("Nombre del perrito: " + perrito.getNombre());
-                System.out.println("Edad del perrito: " + edad + " anios");
-                System.out.println("Raza del perrito: " + perrito.getRaza());
-                System.out.println("Peso del perrito: " + perrito.getPeso());
-                System.out.println("-----------");
-            }
-        }
     }
 
     public void darAdopcion(Perro perrito, Persona duenio){
