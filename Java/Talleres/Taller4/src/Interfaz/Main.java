@@ -21,7 +21,7 @@ public class Main {
             System.out.println("\t0) Salir");
             System.out.print("Su opcion: ");
             int opcion = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); 
 
             switch (opcion) {
                 case 0:

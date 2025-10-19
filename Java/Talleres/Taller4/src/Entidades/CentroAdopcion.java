@@ -90,6 +90,7 @@ public class CentroAdopcion {
     public void mostrarAdopciones(){
         if(personas.size()==0){
             System.out.println("Aun no han ocurrido adopciones");
+            return;
         }
         
         for(Persona p:personas){
@@ -99,8 +100,4 @@ public class CentroAdopcion {
             System.out.println("################");
         }
     } 
-
-    
-    
-
 }
