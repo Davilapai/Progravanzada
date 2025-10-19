@@ -12,16 +12,15 @@ public class Main {
     public static void main(String[] args) {
         CentroAdopcion huellitas = new CentroAdopcion("Huellitas");
 
-        int opcion=5;
-        while(opcion != 0){
-            System.out.println("Escoje una opcion");
+        while(true){
+            System.out.println("Escoge una opcion");
             System.out.println("\t1) Rescatar un perro");
             System.out.println("\t2) Adoptar un perro");
             System.out.println("\t3) Cambiar nombre perro");
             System.out.println("\t4) Mirar clientes");
             System.out.println("\t0) Salir");
             System.out.print("Su opcion: ");
-            opcion = sc.nextInt();
+            int opcion = sc.nextInt();
             sc.nextLine();
 
             switch (opcion) {
@@ -151,6 +150,8 @@ public class Main {
                     break;
                 }
             }
+
+            if(opcion == 0) break;
 
         }
 
