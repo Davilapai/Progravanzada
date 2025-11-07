@@ -25,24 +25,38 @@ public class Catalogo {
         }
         Robot nuevito = new Robot(codigo, pesoMaximo);
         robots.add(nuevito);
-        nuevito.setDuenio(this);
     }
 
-    public void agregarComponente(String codigoR, int id, String nombre, double peso){
-        try{
-            Robot pepito = buscaRobot(codigoR);
-            pepito.agregarComponente(id, nombre, peso);
-        }catch(Exception e){
-            System.out.println("Error: "+e.getMessage());
-        }
+    public void agregarComponente(String codigoR, int id, String nombre, double peso) throws Exception {
+        Robot pepito = buscaRobot(codigoR);
+        pepito.agregarComponente(id, nombre, peso);
     }
+
 
     public void eliminarRobot(String codigo) throws Exception{
-        if(buscaRobot(codigo)== null) throw new Exception("El robot no existe :c");
+        if(buscaRobot(codigo) == null) throw new Exception("El robot no existe :c");
         robots.remove(buscaRobot(codigo));
     }
 
-    public void listaComponentesRobots(){
-        
+    public ArrayList<Componente> listaComponentesRobots() {
+        ArrayList<Componente> lista = new ArrayList<>();
+
+        for (Robot r : robots) {
+            for (Componente c : r.getComponentes()) {
+                boolean repetido = false;
+
+                for (Componente existe : lista) {
+                    if (existe.getNombre().equals(c.getNombre())) {
+                        repetido = true;
+                        break;
+                    }
+                }
+
+                if (!repetido) {
+                    lista.add(c);
+                }
+            }
+        }
+        return lista;
     }
 }
