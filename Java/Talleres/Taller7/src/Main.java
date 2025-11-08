@@ -1,65 +1,225 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-	
-	static Scanner sc = new Scanner(System.in);
-	public static void main(String[] args) {
-		// 1. Crear una instancia de Spotify y agregar 10 canciones distintas
-		Spotify app = new Spotify();
 
-		List<Cancion> catalogo = new ArrayList<>();
-		catalogo.add(crearCancion("Tu con el", "Frankie Ruiz", "Salsa", 1985));
-		catalogo.add(crearCancion("Todas las hojas son del viento", "Luis Alberto Spinetta", "Rock", 1973));
-		catalogo.add(crearCancion("Lo artesanal", "Viejas Locas", "Rock", 2004));
-		catalogo.add(crearCancion("Puchos", "Perras on the beach", "Rock", 2016));
-		catalogo.add(crearCancion("Fuego", "Intoxicados", "Rock", 2003));
-		catalogo.add(crearCancion("Al lado del camino", "Fito Páez", "Rock/Pop", 1999));
-		catalogo.add(crearCancion("Diamante roto", "EMUPM", "Rock", 2023)); 
-		catalogo.add(crearCancion("Para no olvidar", "Los Rodríguez", "Rock", 1993));
-		catalogo.add(crearCancion("Aqui murio el payaso", "Santiago Insane", "Rock", 2019)); 
-		catalogo.add(crearCancion("Volver a casa", "Airbag", "Rock", 2011)); 
+    static Scanner sc = new Scanner(System.in);
 
-		for (Cancion c : catalogo) app.agregarCancion(c);
+    public static void main(String[] args) {
+        // 1. Crear una instancia de Spotify
+        Spotify app = new Spotify();
 
-		//2. Inicio del programa 
-		System.out.println("\tBIENVENIDO A SPOTIFY");
-		System.out.println("\t1. Registrarse");
-		System.out.println("\t2. Ingresar");
-		System.out.print("Su opcion: ");
+        // Las canciones se cargan automáticamente desde el archivo binario
+        System.out.println("Canciones disponibles: " + app.getCanciones().size());
 
-		int opcion = sc.nextInt();
-		sc.nextLine();
-		
-	
+        // 2. Inicio del programa con bucle principal
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("\n\tBIENVENIDO A SPOTIFY");
+            System.out.println("\t1. Registrarse");
+            System.out.println("\t2. Ingresar");
+            System.out.println("\t3. Guardar y Salir");
+            System.out.print("Su opción: ");
 
-		public void registrar(){
-			System.out.println("\tBienvenido al registro");
-			System.out.print("Ingrese su nombre de usuario: ");
-			String nUsuario = sc.nextLine();
-			System.out.print("Ingrese su contrasenia: ");
-			String password = sc.nextLine();
+            int opcion = sc.nextInt();
+            sc.nextLine();
 
-			System.out.print("¿Desea ser premium? (1 = Si/2 = No): ");
-			int decision = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    registrar(app);
+                    break;
+                case 2:
+                    ingresar(app);
+                    break;
+                case 3:
+                    app.guardarUsuarios();
+                    System.out.println("¡Hasta pronto!");
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+                    break;
+            }
+        }
+    }
+
+    public static void registrar(Spotify app) {
+        System.out.println("\tBienvenido al registro");
+        System.out.print("Ingrese su nombre de usuario: ");
+        String nUsuario = sc.nextLine();
+        System.out.print("Ingrese su contraseña: ");
+        String password = sc.nextLine();
+
+        System.out.print("¿Desea ser premium? (1 = Sí / 2 = No): ");
+        int decision = sc.nextInt();
+        sc.nextLine();
+
+		User nuevo;
+
+        if (decision == 1) {
+            nuevo = new Premium(nUsuario, password);
+            System.out.println("Usuario premium creado: " + nUsuario);
+			app.getUsuarios().add(nuevo);
+        } else {
+            nuevo = new Freemium(nUsuario, password);
+            System.out.println("Usuario freemium creado: " + nUsuario);
+			app.getUsuarios().add(nuevo);
+        }
+
+		if(nuevo instanceof Premium){
+			menuPre(nuevo, app);
+		}else{
+			menuFree(nuevo, app);
+		}
+
+    }
+
+	public static void ingresar(Spotify app){
+		System.out.println("\tBienvenido al login");
+        System.out.print("Ingrese su nombre de usuario: ");
+        String nUsuario = sc.nextLine();
+        System.out.print("Ingrese su contraseña: ");
+        String password = sc.nextLine();
+
+		User usuario = app.buscarUsuario(nUsuario, password);
+
+		if(usuario != null){
+			if(usuario instanceof Premium){
+				menuPre(usuario, app);
+			}else{
+				menuFree(usuario, app);
+			}
+		}else{
+			System.out.println("El usuario no existe");
+		}
+
+
+	}
+
+	public static void menuFree(User usuario, Spotify app){
+		boolean continuar = true;
+		while (continuar) {
+			System.out.println("\nMenu Usuario Freemium");
+			System.out.println("\t1. Dar like a cancion");
+			System.out.println("\t2. Dar dislike a cancion");
+			System.out.println("\t3. Reproducir canciones favoritas");
+			System.out.println("\t0. Salir");
+			System.out.print("Su opción: ");
+
+			int opcion = sc.nextInt();
 			sc.nextLine();
 
-			if(decision == 1){
-				Premium nuevo = new Premium(nUsuario, password);
-				
-			}else{
-				Freemium nuevo = new Freemium(nUsuario, password);
+			switch (opcion) {
+				case 1:
+					opcion1(app, usuario);
+					break;
+				case 2:
+					opcion2(app, usuario);
+					break;
+				case 3:
+					opcion3(app, usuario);
+					break;
+				case 0:
+					System.out.println("Regresando al menú principal...");
+					continuar = false;
+					break;
+				default:
+					System.out.println("Opción no válida. Intente de nuevo.");
+					break;
 			}
 		}
+	}
 
-		public Cancion crearCancion(String nombre, String autor, String genero, int anio) {
-			Cancion c = new Cancion();
-			c.setNombre(nombre);
-			c.setAutor(autor);
-			c.setGenero(genero);
-			c.setAnio(anio);
-			return c;
+	public static void menuPre(User usuario, Spotify app){
+		boolean continuar = true;
+		while (continuar) {
+			System.out.println("\nMenu Usuario Premium");
+			System.out.println("\t1. Dar like a cancion");
+			System.out.println("\t2. Dar dislike a cancion");
+			System.out.println("\t3. Reproducir canciones favoritas");
+			System.out.println("\t4. Descargar cancion");
+			System.out.println("\t5. Mostrar canciones descargadas");
+			System.out.println("\t0. Salir");
+			System.out.print("Su opción: ");
+
+			int opcion = sc.nextInt();
+			sc.nextLine();
+
+			switch (opcion) {
+				case 1:
+					opcion1(app, usuario);
+					break;
+				case 2:
+					opcion2(app, usuario);
+					break;
+				case 3:
+					opcion3(app, usuario);
+					break;
+				case 4:
+					opcion4(app, usuario);
+					break;
+				case 5:
+					opcion5(app, usuario);
+					break;
+				case 0:
+					System.out.println("Regresando al menú principal...");
+					continuar = false;
+					break;
+				default:
+					System.out.println("Opción no válida. Intente de nuevo.");
+					break;
+			}
 		}
+	}
+
+	public static void opcion1(Spotify app, User usuario) {
+		app.mostrarCanciones();
+		System.out.print("Escribe el nombre de la cancion a likear: ");
+		String nBuscado = sc.nextLine();
+
+		Cancion buscada = app.seleccionarCancion(nBuscado);
+
+		if(buscada !=null){
+			usuario.like(buscada);
+		}else{
+			System.out.println("La cancion con ese nombre no existe");
+		}
+	}
+
+	public static void opcion2(Spotify app, User usuario){
+		app.mostrarCanciones();
+		System.out.println("Escribe el nombre de la cancion a dislikear: ");
+		String nBuscado = sc.nextLine();
+
+		Cancion buscada = app.seleccionarCancion(nBuscado);
+
+		if(buscada !=null){
+			usuario.dislike(buscada);
+		}else{
+			System.out.println("La cancion con ese nombre no existe");
+		}
+	}
+
+	public static void opcion3(Spotify app, User usuario){
+		for(Cancion c : usuario.getLiked()){
+			usuario.reproducirCancion(c);
+		}
+	}
+
+	public static void opcion4(Spotify app, User usuario){
+		app.mostrarCanciones();
+		System.out.println("Escribe el nombre de la cancion a descargar: ");
+		String nBuscado = sc.nextLine();
+
+		Cancion buscada = app.seleccionarCancion(nBuscado);
+
+		if(buscada !=null){
+			((Premium)usuario).descargarCancion(buscada);
+		}else{
+			System.out.println("La cancion con ese nombre no existe");
+		}
+	}
+
+	public static void opcion5(Spotify app, User usuario){
+		((Premium)usuario).mostrarDescargadas();
 	}
 }

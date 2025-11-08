@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class User {
+public abstract class User implements Serializable {
     private String username;
     private String password;
     private ArrayList <Cancion> liked;
@@ -8,6 +9,7 @@ public abstract class User {
     //Getters
     public String getUsername(){return this.username;}
     public String getPassword(){return this.password;}
+    public ArrayList<Cancion> getLiked(){return this.liked;}
 
     //Setters 
     public void setUsername(String username){this.username = username;}

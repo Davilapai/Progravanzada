@@ -1,4 +1,6 @@
-public class Cancion {
+import java.io.Serializable;
+
+public class Cancion implements Serializable {
     private String nombre;
     private String autor;
     private String genero;
@@ -32,5 +34,4 @@ public class Cancion {
     //Constructor
     public Cancion() {}
 
-    
 }

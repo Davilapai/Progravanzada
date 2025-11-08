@@ -1,18 +1,25 @@
+import java.io.*;
 import java.util.ArrayList;
 
-public class Spotify {
+public class Spotify implements Serializable {
     private ArrayList<User> usuarios;
     private ArrayList<Cancion> canciones;
+    private static final String ARCHIVO_USUARIOS = "usuarios.dat";
+    private static final String ARCHIVO_CANCIONES = "canciones.dat";
 
     // Getters
     public ArrayList<User> getUsuarios() {
         return usuarios;
     }
 
+    public ArrayList<Cancion> getCanciones() {
+        return canciones;
+    }
+
     //Constructor
     public Spotify(){
-        usuarios = new ArrayList<>();
-        canciones = new ArrayList<>();
+        cargarUsuarios(); // Cargar usuarios existentes al inicializar
+        cargarCanciones(); // Cargar canciones existentes al inicializar
     }
 
     //Metodos
@@ -55,6 +62,47 @@ public class Spotify {
         return null;
     }
 
-    
+    // Métodos para persistencia de datos
+    public void guardarUsuarios() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_USUARIOS))) {
+            oos.writeObject(usuarios);
+            System.out.println("Usuarios guardados exitosamente.");
+        } catch (IOException e) {
+            System.err.println("Error al guardar usuarios: " + e.getMessage());
+        }
+    }
 
+    @SuppressWarnings("unchecked")
+    public void cargarUsuarios() {
+        File archivo = new File(ARCHIVO_USUARIOS);
+        if (archivo.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO_USUARIOS))) {
+                usuarios = (ArrayList<User>) ois.readObject();
+                System.out.println("Usuarios cargados exitosamente.");
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error al cargar usuarios: " + e.getMessage());
+                usuarios = new ArrayList<>();
+            }
+        } else {
+            System.out.println("No se encontró archivo de usuarios previo. Iniciando con lista vacía.");
+            usuarios = new ArrayList<>();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void cargarCanciones() {
+        File archivo = new File(ARCHIVO_CANCIONES);
+        if (archivo.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO_CANCIONES))) {
+                canciones = (ArrayList<Cancion>) ois.readObject();
+                System.out.println("Canciones cargadas exitosamente.");
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error al cargar canciones: " + e.getMessage());
+                canciones = new ArrayList<>();
+            }
+        } else {
+            System.out.println("No se encontró archivo de canciones previo. Iniciando con lista vacía.");
+            canciones = new ArrayList<>();
+        }
+    }
 }
