@@ -42,6 +42,7 @@ public class CentroAdopcion implements Serializable{
     }
 
     public void mostrarInternos(){
+        //Este es un validador para q no muestre nada vacio
         if(internos.size() == 0){
             System.out.println("Aun no hay mascotas");
             return;
@@ -52,7 +53,9 @@ public class CentroAdopcion implements Serializable{
         for(Mascota m : internos){
             double edad = m.calcularEdad();
             
+            //Solo muestra las mascotas mayores a 1 año
             if(edad>=1){
+                //Dependiento si es gato o perro muestra al inicio que especie es
                 if(m instanceof Perro){
                     System.out.println("Perrito");
                 }else{
@@ -67,6 +70,7 @@ public class CentroAdopcion implements Serializable{
         }
     }
 
+    //Al adoptar es importante removerlo de la lista del centro 
     public void darAdopcion(Mascota m, Persona duenio){
         duenio.adoptarMascota(m);
         internos.remove(m);
@@ -74,6 +78,7 @@ public class CentroAdopcion implements Serializable{
     }
 
     public void agregarCliente(Persona persona){
+        //Le saca la cedula a la persona y busca el cliente, si ya existe no lo agrega 
         if(buscarCliente(persona.getCedula())==null){
             System.out.println("Cliente agregado");
             clientes.add(persona);
@@ -83,6 +88,7 @@ public class CentroAdopcion implements Serializable{
     }
 
     public Persona buscarCliente(String cedula){
+        //Usa la lista de personas del centro y busca la cedula, si no hay retorna nul
         for(Persona personita : clientes){
             if (personita.getCedula().equals(cedula)){
                 return personita;
@@ -92,6 +98,7 @@ public class CentroAdopcion implements Serializable{
     }
 
     public Mascota buscarMascota(String nombre, ArrayList<Mascota> lista){
+        //Si la lista esta vacia no puede buscar mascota y retorna null.
         if(lista.size() == 0){
             System.out.println("La lista esta vacia");
             return null;
@@ -176,6 +183,7 @@ public class CentroAdopcion implements Serializable{
                 try{
                     opcion = sc.nextInt();
                     sc.nextLine();
+                    //Si la opcion se va fuera de rango tira una excepcion. 
                     if (opcion < 1 || opcion > 4) throw new Exception("Numero invalido en jugar con el perro");
                     break;
                 }catch(Exception e){
@@ -232,6 +240,7 @@ public class CentroAdopcion implements Serializable{
     }
 
     public static void registrar(Exception e) {
+        //Esto abre el archivo y escribe la excepcion en excepciones.txt.
         try (FileWriter fw = new FileWriter("excepciones.txt", true);
              PrintWriter pw = new PrintWriter(fw)) {
 
