@@ -1,8 +1,6 @@
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 public class Perro extends Mascota{
-    Scanner sc = new Scanner(System.in);
 
     private GregorianCalendar fechaBanio;
     private boolean limpio;

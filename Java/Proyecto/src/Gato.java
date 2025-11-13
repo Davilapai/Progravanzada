@@ -1,8 +1,6 @@
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 public class Gato extends Mascota {
-    Scanner sc = new Scanner(System.in);
 
     private boolean uniasLargas;
 

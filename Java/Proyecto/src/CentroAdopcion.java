@@ -1,9 +1,5 @@
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class CentroAdopcion implements Serializable{
@@ -34,6 +30,7 @@ public class CentroAdopcion implements Serializable{
         this.clientes = new ArrayList<>();
         this.internos = new ArrayList<>();
         this.guarderia = new ArrayList<>();
+        this.ganancias = 0;
     }
 
     //Metodos
@@ -42,12 +39,6 @@ public class CentroAdopcion implements Serializable{
     }
 
     public void mostrarInternos(){
-        //Este es un validador para q no muestre nada vacio
-        if(internos.size() == 0){
-            System.out.println("Aun no hay mascotas");
-            return;
-        }
-        
         System.out.println("Las mascotas disponibles son las siguientes");
 
         for(Mascota m : internos){
@@ -179,19 +170,7 @@ public class CentroAdopcion implements Serializable{
             System.out.println("4. Baniarlo");
             System.out.print("Su opcion: ");
             
-            while(true){
-                try{
-                    opcion = sc.nextInt();
-                    sc.nextLine();
-                    //Si la opcion se va fuera de rango tira una excepcion. 
-                    if (opcion < 1 || opcion > 4) throw new Exception("Numero invalido en jugar con el perro");
-                    break;
-                }catch(Exception e){
-                    registrar(e);
-                    sc.nextLine();
-                    System.out.println("Elija un numero valido: ");   
-                }
-            }
+            opcion = Utils.retornaIntRango(1, 4);
             
             if(opcion == 4){
                 ((Perro)mascota).baniar();
@@ -203,18 +182,7 @@ public class CentroAdopcion implements Serializable{
             System.out.println("2. Acariciar al gato");
             System.out.print("Su opcion: ");
             
-            while(true){
-                try{
-                    opcion = sc.nextInt();
-                    sc.nextLine();
-                    if (opcion < 1 || opcion > 2) throw new Exception("Numero invalido en jugar con el gato");
-                    break;
-                }catch(Exception e){
-                    registrar(e);
-                    sc.nextLine();
-                    System.out.println("Elija un numero valido: ");   
-                }
-            }
+            opcion = Utils.retornaIntRango(1, 2);
             
             ((Gato)mascota).jugar(opcion);
         }
@@ -239,18 +207,13 @@ public class CentroAdopcion implements Serializable{
         }
     }
 
-    public static void registrar(Exception e) {
-        //Esto abre el archivo y escribe la excepcion en excepciones.txt.
-        try (FileWriter fw = new FileWriter("excepciones.txt", true);
-             PrintWriter pw = new PrintWriter(fw)) {
-
-            // Fecha y hora actual usando Date en lugar de Gregorian calendar JAJAJAJA
-            String fechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
-
-            pw.println("[" + fechaHora + "] " + e.getMessage());
-            
-        } catch (Exception ex) {
-            System.err.println("Error al registrar la excepción: " + ex.getMessage());
+    public int cantidadInternosDisponibles(){
+        int cantidad = 0;
+        for(Mascota m : internos){
+            if(m.calcularEdad()>1){
+                cantidad++;
+            }
         }
+        return cantidad;
     }
 }

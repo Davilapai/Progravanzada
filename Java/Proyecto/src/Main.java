@@ -1,11 +1,8 @@
 import java.util.Scanner;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.io.FileInputStream;
@@ -25,7 +22,7 @@ public class Main{
             System.out.println("Centro de adopcion cargado");
 
         }catch(Exception e){
-            registrar(e); 
+            Utils.escribirError(e);
             System.out.println("No hay archivos para cargar");
             huellitas = new CentroAdopcion("Huellitas");
         }
@@ -41,16 +38,7 @@ public class Main{
             System.out.println("\t0) Guardar y salir");
             System.out.print("Su opcion: ");
             
-            int opcion;
-                try{
-                    opcion=sc.nextInt();
-                    sc.nextLine();
-                }catch(Exception e){
-                    registrar(e);
-                    sc.nextLine();
-                    opcion = 12;
-                }
-
+            int opcion = Utils.retornaNumeroSwitch();
 
             switch (opcion) {
                 case 0:{
@@ -59,7 +47,7 @@ public class Main{
                         archivo.writeObject(huellitas);
                         archivo.close();
                     }catch(Exception e){
-                        registrar(e);
+                        Utils.escribirError(e);
                         System.out.println("Error al guardar el archivo");
                     }
                     break;
@@ -73,18 +61,10 @@ public class Main{
                     String raza = sc.nextLine();
 
                     System.out.print("Ingrese el peso de la mascota: ");
-                    float peso;
+                    float peso = -1;
 
-                    while(true){
-                        try{
-                            peso = sc.nextFloat();
-                            sc.nextLine();
-                            break;
-                        }catch(Exception e){
-                            registrar(e);
-                            System.out.println("El peso tiene que ser un numero ");
-                            sc.nextLine();
-                        }
+                    while(peso<1){
+                        peso = Utils.retornaFloatNegativo();
                     }
 
                     //Todo esto para la fecha q salia con un LocalDate -.-
@@ -110,7 +90,7 @@ public class Main{
                             }
 
                         } catch (Exception e) {
-                            registrar(e);
+                            Utils.escribirError(e);
                             System.out.println("Formato invalido, ingresa nuevamente");
                         }
                     }
@@ -119,20 +99,7 @@ public class Main{
                     System.out.println("\t2. Gato");
                     System.out.print("Su opcion: ");
 
-                    int tipoM;
-                    
-                    while(true){
-                        try{
-                            tipoM = sc.nextInt();
-                            sc.nextLine();
-                            if (tipoM != 1 && tipoM !=2) throw new Exception("Numero invalido en gato o perro");
-                            break;
-                        }catch(Exception e){
-                            registrar(e);
-                            sc.nextLine();
-                            System.out.println("Elija una opcion valida: ");
-                        }
-                    }
+                    int tipoM = Utils.retornaIntRango(1,2);
                     
                     if(tipoM == 1){
                         //Vamos a asumir que el perro fue bañado para ser rescatado y jugaron con el antes de llevarlo al refugio
@@ -148,22 +115,13 @@ public class Main{
                 }
                 
                 case 2:{
+                    if(huellitas.cantidadInternosDisponibles()==0){
+                        System.out.println("Aun no hay mascotas disponibles");
+                        break;
+                    }
                     Persona personita = null;
                     System.out.println("Ingrese la cedula de la persona que va a adoptar: ");
-                    System.out.print("Cedula: ");
-                    String cedula;
-
-                    while(true){
-                        try{
-                           cedula = sc.nextLine(); 
-                           if(cedula.length() != 10) throw new Exception("Cedula invalida, solo 10 caracteres");
-                           break;
-                        } catch(Exception e){
-                            registrar(e);
-                            System.out.println(e.getMessage());
-                            System.out.print("Ingrese nuevamente: ");
-                        }
-                    }   
+                    String cedula = Utils.retornaCedula();  
 
                     if(huellitas.buscarCliente(cedula) == null){
                     
@@ -173,20 +131,7 @@ public class Main{
                         String nombresito = sc.nextLine();
 
                         System.out.print("Ingrese la edad de la persona: ");
-                        int edad;
-
-                        while(true){
-                            try{ 
-                                edad= sc.nextInt();
-                                sc.nextLine();
-                                break;
-                            }catch(Exception e){
-                                registrar(e);
-                                sc.nextLine();
-                                System.out.println("La edad tiene que ser un entero");
-                                System.out.println("Ingrese nuevamente: ");
-                            }
-                        }
+                        int edad = Utils.retornaInt();
 
                         System.out.print("Ingrese la direccion de la persona: ");
                         String residencia = sc.nextLine();
@@ -205,34 +150,19 @@ public class Main{
 
                     Mascota p = huellitas.buscarMascota(nMascota, huellitas.getInternos());
 
-                    while (p == null) {
+                    while (p == null || p.calcularEdad() < 1) {
                         System.out.println("No se encontró la mascota, ingrese otro nombre:");
                         nMascota = sc.nextLine(); 
                         p = huellitas.buscarMascota(nMascota, huellitas.getInternos());
                     }
 
                     huellitas.darAdopcion(p,personita);
-                    System.out.println("La mascota " + p.getNombre() + " ha sido adoptado");
-
                     break;
                 }
 
 
                 case 3:{
-                    System.out.print("Ingrese la cedula del cliente: ");
-                    String cedula;
-
-                    while(true){
-                        try{
-                           cedula = sc.nextLine(); 
-                           if(cedula.length() != 10) throw new Exception("Cedula invalida, solo 10 caracteres");
-                           break;
-                        } catch(Exception e){
-                            registrar(e);
-                            System.out.println(e.getMessage());
-                            System.out.print("Ingrese nuevamente: ");
-                        }
-                    }
+                    String cedula = Utils.retornaCedula();
 
                     Persona personita = huellitas.buscarCliente(cedula);
                     
@@ -261,20 +191,7 @@ public class Main{
                 }
                 
                 case 4:{   
-                    System.out.print("Ingrese la cedula del cliente: ");
-                    String cedula;
-
-                    while(true){
-                        try{
-                           cedula = sc.nextLine(); 
-                           if(cedula.length() != 10) throw new Exception("Cedula invalida, solo 10 caracteres");
-                           break;
-                        } catch(Exception e){
-                            registrar(e);
-                            System.out.println(e.getMessage());
-                            System.out.print("Ingrese nuevamente: ");
-                        }
-                    }
+                    String cedula = Utils.retornaCedula();
 
                     Persona personita = huellitas.buscarCliente(cedula);
                     
@@ -286,28 +203,20 @@ public class Main{
                         System.out.println("\t2. Retirar mascota de la guarderia");
                         System.out.print("Su opcion: ");
 
-                        int tipoM;
-                    
-                        while(true){
-                            try{
-                                tipoM = sc.nextInt();
-                                sc.nextLine();
-                                if (tipoM != 1 && tipoM !=2) throw new Exception("Numero invalido en ingresar o retirar");
-                                break;
-                            }catch(Exception e){
-                                registrar(e);
-                                sc.nextLine();
-                                System.out.println("Elija un numero valido: ");   
-                            }
-                        }
+                        int tipoM = Utils.retornaIntRango(1, 2);
 
                         if(tipoM == 1){
                             huellitas.dejarMascota(personita);
                         }else{
-                            System.out.print("Ingrese el nombre de la mascota: ");
-                            String nombre = sc.nextLine();
-                            huellitas.recogerMascota(nombre, personita);
+                            if(huellitas.getGuarderia().isEmpty()){
+                                System.out.println("Aun no hay mascotas en la guarderia");
+                            }else{
+                                System.out.print("Ingrese el nombre de la mascota: ");
+                                String nombre = sc.nextLine();
+                                huellitas.recogerMascota(nombre, personita);
+                            }
                         }
+                            
                     }
                     break;
                 }
@@ -348,20 +257,5 @@ public class Main{
 
         }
 
-    }
-
-    //Funcion para registrar excepciones
-    public static void registrar(Exception e) {
-        try (FileWriter fw = new FileWriter("excepciones.txt", true);
-             PrintWriter pw = new PrintWriter(fw)) {
-
-            // Fecha y hora actual usando Date en lugar de Gregorian calendar JAJAJAJA
-            String fechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
-
-            pw.println("[" + fechaHora + "] " + e.getMessage());
-            
-        } catch (Exception ex) {
-            System.err.println("Error al registrar la excepción: " + ex.getMessage());
-        }
     }
 }
