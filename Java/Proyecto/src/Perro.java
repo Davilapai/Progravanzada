@@ -1,6 +1,7 @@
 import java.util.GregorianCalendar;
 
 public class Perro extends Mascota{
+    private static final long serialVersionUID = 1L;
 
     private GregorianCalendar fechaBanio;
     private boolean limpio;
@@ -37,7 +38,7 @@ public class Perro extends Mascota{
     }
 
     public void baniar(){
-        System.out.println("Baniaste al perro");
+        System.out.println("Bañaste al perro");
         fechaBanio = new GregorianCalendar();
         limpio = true;
     }

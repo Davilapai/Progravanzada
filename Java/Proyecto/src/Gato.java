@@ -1,6 +1,7 @@
 import java.util.GregorianCalendar;
 
 public class Gato extends Mascota {
+    private static final long serialVersionUID = 1L;
 
     private boolean uniasLargas;
 
@@ -21,7 +22,7 @@ public class Gato extends Mascota {
     @Override
     public void jugar(int opcion){
         if(opcion == 1){
-            System.out.println("Has afilado las unias del gato");
+            System.out.println("Has afilado las uñas del gato");
             uniasLargas = true;
         }else{
             System.out.println("Acariciaste al gato");
@@ -29,7 +30,7 @@ public class Gato extends Mascota {
     }
 
     public void cortarUnias(){
-        System.out.println("Cortaste las unias del gato");
+        System.out.println("Cortaste las uñas del gato");
         uniasLargas = false;
     }
 

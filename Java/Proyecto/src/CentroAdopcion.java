@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CentroAdopcion implements Serializable{
+    private static final long serialVersionUID = 1L;
     Scanner sc = new Scanner(System.in);
 
     private String nombre;
@@ -53,7 +54,7 @@ public class CentroAdopcion implements Serializable{
                     System.out.println("Gatito");
                 }
                 System.out.println("Nombre: " + m.getNombre());
-                System.out.println("Edad: " + edad + " anios");
+                System.out.println("Edad: " + edad + " años");
                 System.out.println("Raza: " + m.getRaza());
                 System.out.println("Peso: " + m.getPeso());
                 System.out.println("-----------");
@@ -91,7 +92,6 @@ public class CentroAdopcion implements Serializable{
     public Mascota buscarMascota(String nombre, ArrayList<Mascota> lista){
         //Si la lista esta vacia no puede buscar mascota y retorna null.
         if(lista.size() == 0){
-            System.out.println("La lista esta vacia");
             return null;
         }
 
@@ -151,11 +151,11 @@ public class CentroAdopcion implements Serializable{
         }
 
         if(buscada.getDuenio() == persona){
-            System.out.println("La mascota " + nombre + " ha regresado con su duenio");
+            System.out.println("La mascota " + nombre + " ha regresado con su dueño");
             persona.getMascotas().add(buscada);
             guarderia.remove(buscada);
         }else{
-            System.out.println("La persona no es duenia de esa mascota");
+            System.out.println("La persona no es dueña de esa mascota");
         }
     }
 
@@ -167,7 +167,7 @@ public class CentroAdopcion implements Serializable{
             System.out.println("1. Tirar la pelota");
             System.out.println("2. Salir al parque");
             System.out.println("3. Jugar con otros perros");
-            System.out.println("4. Baniarlo");
+            System.out.println("4. Bañarlo");
             System.out.print("Su opcion: ");
             
             opcion = Utils.retornaIntRango(1, 4);
@@ -178,7 +178,7 @@ public class CentroAdopcion implements Serializable{
                 ((Perro)mascota).jugar(opcion);
             }
         }else{
-            System.out.println("1. Afilar unias del gato");
+            System.out.println("1. Afilar uñas del gato");
             System.out.println("2. Acariciar al gato");
             System.out.print("Su opcion: ");
             
@@ -194,6 +194,11 @@ public class CentroAdopcion implements Serializable{
 
     //Metodo auxiliares
     public void mostrarGuarderia(){
+        if(guarderia.isEmpty()){
+            System.out.println("No hay mascotas en la guardería");
+            return;
+        }
+        
         System.out.println("Las mascotas disponibles son las siguientes");
         
         for(Mascota m : guarderia){

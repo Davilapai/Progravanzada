@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Persona implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private int edad;
     private String residencia;
@@ -50,6 +51,11 @@ public class Persona implements Serializable{
     }
 
     public void mostrarMascotas(){
+        if(mascotas.isEmpty()){
+            System.out.println("La persona no tiene mascotas");
+            return;
+        }
+        
         System.out.println("La persona tiene " + mascotas.size() + " mascota(s)");
         for(Mascota m : mascotas){
             if(m instanceof Perro){
@@ -58,7 +64,7 @@ public class Persona implements Serializable{
                 System.out.println("La mascota es un Gatito");
             }
             System.out.println("Nombre de la mascota: " + m.getNombre());
-            System.out.println("Edad de la mascota: " + m.calcularEdad() + " anios");
+            System.out.println("Edad de la mascota: " + m.calcularEdad() + " años");
             System.out.println("Raza de la mascota: " + m.getRaza());
             System.out.println("Peso de la mascota: " + m.getPeso());
 

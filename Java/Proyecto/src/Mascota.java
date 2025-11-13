@@ -3,6 +3,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public abstract class Mascota implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String raza;
     private GregorianCalendar fechaNacimiento;
     private float peso;
@@ -40,7 +41,7 @@ public abstract class Mascota implements Serializable {
     }
 
     //Metodos
-    public double calcularEdad(){
+    public int calcularEdad(){
         //Para sacar la fecha de hoy
         Calendar hoy = Calendar.getInstance();
 
@@ -52,21 +53,21 @@ public abstract class Mascota implements Serializable {
         //Esto significa que aun no cumple años, por lo tanto restamos el año que se va extra y sumamos 12 meses para eliminar el mes negativo, teniendo asi que tiene 11 meses.
         //Lo mismo para los dias. 
 
-        if (meses < 0 || (meses == 0 && dias < 0)) {
+        if (dias < 0) {
+            dias += 30; // Aproximación
+            meses--;
+        }
+
+        if (meses < 0) {
             años--;
             meses += 12;
         }
-        if (dias < 0) {
-            dias += 30; // Aproximación
-        }
+        
 
         //Esto es para q todo quede en años
         double edad = años + (meses / 12.0) + (dias / 365.0);
 
-        //Para q salga redondeado a 2 decimales. 
-        edad = Math.round(edad*100.0)/100.0;
-
-        return edad;
+        return (int)edad;
     }
 
     public abstract void jugar(int opcion);

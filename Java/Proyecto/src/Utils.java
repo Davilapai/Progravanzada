@@ -1,10 +1,9 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Utils implements Serializable{
+public class Utils{
     public static Scanner sc = new Scanner(System.in);
     
     public static void escribirError(Exception e){

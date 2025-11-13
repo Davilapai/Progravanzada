@@ -105,11 +105,11 @@ public class Main{
                         //Vamos a asumir que el perro fue bañado para ser rescatado y jugaron con el antes de llevarlo al refugio
                         Perro perrito = new Perro(raza, fechaNacimiento, peso, nombre, new GregorianCalendar(), new GregorianCalendar(), true);
                         huellitas.rescatarMascota(perrito);
-                        System.out.println("El perrito ha sido rescatado");  
+                        System.out.println("La mascota " + nombre + " ha sido rescatada");  
                     }else{
                         Gato gatito = new Gato(raza, fechaNacimiento, peso, nombre, new GregorianCalendar(), false);
                         huellitas.rescatarMascota(gatito);
-                        System.out.println("El gatito ha sido rescatado");
+                        System.out.println("La mascota " + nombre + " ha sido rescatada");
                     }
                     break;
                 }
@@ -176,7 +176,7 @@ public class Main{
                         Mascota mascotita = huellitas.buscarMascota(nAntiguo, personita.getMascotas());
 
                         while(mascotita == null){
-                            System.out.print("No se ha encontrado mascotas con ese nombre, ingrese nuevamente el nombre: ");
+                            System.out.print("No se encontró la mascota. Ingrese nuevamente el nombre: ");
                             nAntiguo = sc.nextLine();
                             mascotita = huellitas.buscarMascota(nAntiguo, personita.getMascotas());
                         }
@@ -209,7 +209,7 @@ public class Main{
                             huellitas.dejarMascota(personita);
                         }else{
                             if(huellitas.getGuarderia().isEmpty()){
-                                System.out.println("Aun no hay mascotas en la guarderia");
+                                System.out.println("No hay mascotas en la guardería");
                             }else{
                                 System.out.print("Ingrese el nombre de la mascota: ");
                                 String nombre = sc.nextLine();
@@ -223,7 +223,7 @@ public class Main{
 
                 case 5:{
                     if(huellitas.getGuarderia().isEmpty()){
-                        System.out.println("Aun no hay animales para jugar");
+                        System.out.println("No hay animales en la guardería para jugar");
                         break;
                     }
                     System.out.println("Elige la mascota con la que quieres jugar");
@@ -233,7 +233,7 @@ public class Main{
                     Mascota mascotita = huellitas.buscarMascota(nMascota, huellitas.getGuarderia());
 
                         while(mascotita == null){
-                            System.out.print("No se ha encontrado mascotas con ese nombre, ingrese nuevamente el nombre: ");
+                            System.out.print("No se encontró la mascota. Ingrese nuevamente el nombre: ");
                             nMascota = sc.nextLine();
                             mascotita = huellitas.buscarMascota(nMascota, huellitas.getGuarderia());
                         }
