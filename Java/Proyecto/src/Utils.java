@@ -25,7 +25,7 @@ public class Utils{
                     opcion=sc.nextInt();
                     sc.nextLine();
                 }catch(Exception e){
-                    Utils.escribirError(e);
+                    escribirError(e);
                     sc.nextLine();
                     opcion = 12;
                 }
@@ -38,7 +38,7 @@ public class Utils{
             peso = sc.nextFloat();
             sc.nextLine();
             }catch(Exception e){
-                Utils.escribirError(e);
+                escribirError(e);
                 System.out.print("Ingrese un numero valido: ");
                 sc.nextLine();
                 peso = -1;
@@ -56,7 +56,7 @@ public class Utils{
                     throw new Exception("Número fuera de rango");
                 return numerito;
             } catch (Exception e) {
-                Utils.escribirError(e);
+                escribirError(e);
                 System.out.print("Elija una opción válida (" + inferior + " - " + superior + "): ");
                 sc.nextLine(); // limpiar el buffer después del error
             }

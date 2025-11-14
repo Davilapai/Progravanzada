@@ -32,7 +32,7 @@ public class Main{
             System.out.println("\t1) Rescatar una mascota");
             System.out.println("\t2) Adoptar un mascota");
             System.out.println("\t3) Cambiar nombre mascota");
-            System.out.println("\t4) Dejar mascota en la guarderia");
+            System.out.println("\t4) Ir a la guarderia");
             System.out.println("\t5) Interactuar con una mascota");
             System.out.println("\t6) Mirar clientes");
             System.out.println("\t0) Guardar y salir");
@@ -151,7 +151,7 @@ public class Main{
                     Mascota p = huellitas.buscarMascota(nMascota, huellitas.getInternos());
 
                     while (p == null || p.calcularEdad() < 1) {
-                        System.out.println("No se encontró la mascota, ingrese otro nombre:");
+                        System.out.print("No se encontró la mascota, ingrese otro nombre:");
                         nMascota = sc.nextLine(); 
                         p = huellitas.buscarMascota(nMascota, huellitas.getInternos());
                     }

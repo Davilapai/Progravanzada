@@ -1,10 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class CentroAdopcion implements Serializable{
     private static final long serialVersionUID = 1L;
-    Scanner sc = new Scanner(System.in);
 
     private String nombre;
     private int ganancias;
@@ -125,13 +123,13 @@ public class CentroAdopcion implements Serializable{
 
         cliente.mostrarMascotas();
         System.out.print("Ingrese el nombre de la mascota que quiera dejar a nuestro cuidado: ");
-        String nombre = sc.nextLine();
+        String nombre = Utils.sc.nextLine();
 
         Mascota buscada = buscarMascota(nombre, cliente.getMascotas());
 
         while(buscada == null){
             System.out.print("Nombre incorrecto, ingreselo nuevamente: ");
-            nombre = sc.nextLine();
+            nombre = Utils.sc.nextLine();
             buscada = buscarMascota(nombre, cliente.getMascotas());
         }
 
@@ -180,11 +178,17 @@ public class CentroAdopcion implements Serializable{
         }else{
             System.out.println("1. Afilar uñas del gato");
             System.out.println("2. Acariciar al gato");
+            System.out.println("3. Cortar uñas al gato");
             System.out.print("Su opcion: ");
             
-            opcion = Utils.retornaIntRango(1, 2);
+            opcion = Utils.retornaIntRango(1, 3);
             
-            ((Gato)mascota).jugar(opcion);
+            if(opcion!=3){
+                ((Gato)mascota).jugar(opcion);
+            }else{
+                ((Gato)mascota).cortarUnias();
+            }
+            
         }
 
         ganancias += 10;
@@ -215,7 +219,7 @@ public class CentroAdopcion implements Serializable{
     public int cantidadInternosDisponibles(){
         int cantidad = 0;
         for(Mascota m : internos){
-            if(m.calcularEdad()>1){
+            if(m.calcularEdad()>=1){
                 cantidad++;
             }
         }

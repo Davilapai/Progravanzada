@@ -1,0 +1,5 @@
+2025-11-14T11:17:28.419182600 - adopcion.bin (El sistema no puede encontrar el archivo especificado)
+2025-11-14T11:18:40.195227500 - java.util.Scanner
+2025-11-14T11:19:17.933946400 - writing aborted; java.io.NotSerializableException: java.util.Scanner
+2025-11-14T11:28:41.272498200 - writing aborted; java.io.NotSerializableException: java.util.Scanner
+2025-11-14T11:29:17.179349900 - adopcion.bin (El sistema no puede encontrar el archivo especificado)
