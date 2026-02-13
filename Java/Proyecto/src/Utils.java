@@ -94,6 +94,52 @@ public class Utils{
             }
         }
     }
+    
+    public static double retornaDouble(){
+        double numerito;
+        while (true) {
+            try {
+                numerito = sc.nextInt();
+                sc.nextLine();
+                return numerito;
+            } catch (Exception e) {
+                Utils.escribirError(e);
+                sc.nextLine(); // limpiar el buffer después del error
+                System.out.print("Ingrese el numero nuevamente: ");
+            }
+        } 
+    }
+    
+    public static void guardarInformacion(CentroAdopcion cda) {
+    	for(Mascota m : cda.getInternos()) {
+    		String cadena = definirCadena(m);
+    		escribirGI(cadena);
+    	}
+    	System.out.println("Se ha guardado toda la informacion");
+    }
+    
+    public static String definirCadena(Mascota m) {
+    	String cadena;
+    	try {
+    		cadena = m.generarInformacion();
+    	}catch(Exception e) {
+    		escribirError(e);
+    		cadena = "error al generar informacion";
+    	}
+    	return cadena;
+    	
+    }
+    
+    public static void escribirGI(String cadena) {
+    	try {
+    		BufferedWriter file = new BufferedWriter(new FileWriter("Mascotirijillas.txt",true));
+    		file.write(cadena);
+    		file.newLine();
+    		file.close();
+    	}catch(Exception e) {
+    		escribirError(e);
+    	}
+    }
 
     
 }

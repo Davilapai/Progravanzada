@@ -42,4 +42,16 @@ public class Perro extends Mascota{
         fechaBanio = new GregorianCalendar();
         limpio = true;
     }
+    
+    @Override
+	public String generarInformacion() throws Exception{
+		if(nombre == null || nombre.isBlank()) {
+			throw new Exception("Este no tiene nombresito");
+		}
+		return "Nombre: " + nombre +
+				"- Edad: " + calcularEdad()+
+				"- Peso: " + peso + 
+				"- Raza: " + raza + 
+				"- Limpio: " + (limpio ? "Si":"No");
+	}
 }

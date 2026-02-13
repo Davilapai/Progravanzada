@@ -1,0 +1,11 @@
+
+Nombre: martin- Edad: 1- Peso: 12.0- Raza: labrador- Unias: No
+Nombre: Pedrito- Edad: 1- Peso: 15.0- Raza: peludo- AlturaSalto: 15.0
+Nombre: martin- Edad: 1- Peso: 12.0- Raza: labrador- Unias: No
+Nombre: Pedrito- Edad: 1- Peso: 15.0- Raza: peludo- AlturaSalto: 15.0
+Nombre: pedrito- Edad: 27- Peso: 12.0- Raza: si- Unias: No
+error al generar informacion
+Nombre: martin- Edad: 1- Peso: 12.0- Raza: labrador- Unias: No
+Nombre: Pedrito- Edad: 1- Peso: 15.0- Raza: peludo- AlturaSalto: 15.0
+Nombre: pedrito- Edad: 27- Peso: 12.0- Raza: si- Unias: No
+error al generar informacion

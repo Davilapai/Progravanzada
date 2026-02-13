@@ -35,6 +35,8 @@ public class Main{
             System.out.println("\t4) Ir a la guarderia");
             System.out.println("\t5) Interactuar con una mascota");
             System.out.println("\t6) Mirar clientes");
+            System.out.println("\t7) Mostrar estadistica");
+            System.out.println("\t8) Guardar informacion de las mascotas");
             System.out.println("\t0) Guardar y salir");
             System.out.print("Su opcion: ");
             
@@ -97,19 +99,25 @@ public class Main{
                     System.out.println("Defina si la mascota es un perro o un gato");
                     System.out.println("\t1. Perro");
                     System.out.println("\t2. Gato");
+                    System.out.println("\t3. Conejo");
                     System.out.print("Su opcion: ");
 
-                    int tipoM = Utils.retornaIntRango(1,2);
+                    int tipoM = Utils.retornaIntRango(1,3);
                     
                     if(tipoM == 1){
                         //Vamos a asumir que el perro fue bañado para ser rescatado y jugaron con el antes de llevarlo al refugio
                         Perro perrito = new Perro(raza, fechaNacimiento, peso, nombre, new GregorianCalendar(), new GregorianCalendar(), true);
                         huellitas.rescatarMascota(perrito);
                         System.out.println("La mascota " + nombre + " ha sido rescatada");  
-                    }else{
+                    }else if (tipoM ==2){
                         Gato gatito = new Gato(raza, fechaNacimiento, peso, nombre, new GregorianCalendar(), false);
                         huellitas.rescatarMascota(gatito);
                         System.out.println("La mascota " + nombre + " ha sido rescatada");
+                    }else {
+                    	System.out.print("Ingrese la altura de salto de su conejo: ");
+                    	double alturaSalto = Utils.retornaDouble();
+                    	Conejo conejito = new Conejo(raza, fechaNacimiento, peso, nombre, new GregorianCalendar(), alturaSalto);
+                    	huellitas.rescatarMascota(conejito);
                     }
                     break;
                 }
@@ -245,6 +253,16 @@ public class Main{
                     System.out.println("La lista de clientes es");
                     huellitas.mostrarAdopciones();
                     break;
+                }
+                
+                case 7:{
+                	huellitas.mostrarEstadistica();
+                	break;
+                }
+                
+                case 8:{
+                	Utils.guardarInformacion(huellitas);
+                	break;
                 }
                 
                 default:{

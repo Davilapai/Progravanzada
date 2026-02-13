@@ -1,16 +1,16 @@
-import java.io.Serializable;
+	import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public abstract class Mascota implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String raza;
-    private GregorianCalendar fechaNacimiento;
-    private float peso;
-    private String nombre;
-    private GregorianCalendar fechaAdopcion;
-    private GregorianCalendar ultimaInteraccion;
-    private Persona duenio;
+    protected String raza;
+    protected GregorianCalendar fechaNacimiento;
+    protected float peso;
+    protected String nombre;
+    protected GregorianCalendar fechaAdopcion;
+    protected GregorianCalendar ultimaInteraccion;
+    protected Persona duenio;
 
     //Getters
     public String getRaza() {return raza;}
@@ -71,4 +71,5 @@ public abstract class Mascota implements Serializable {
     }
 
     public abstract void jugar(int opcion);
+    public abstract String generarInformacion()throws Exception;
 }
